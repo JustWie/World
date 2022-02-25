@@ -3,3 +3,5 @@
 /Temp
 /obj
 /Build
+/Assets/Ludiq
+/Assets/*.meta
