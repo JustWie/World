@@ -51,8 +51,9 @@ public class UI
 
     private void OnButtonClick()
     {
-        var atk = Singleton<PlayerData>.ins.GetATK();
-        Singleton<BossData>.ins.UnderFire(atk);
+        //var atk = Singleton<PlayerData>.ins.GetATK();
+        //Singleton<BossData>.ins.UnderFire(atk);
+        EntityMgr.ins.XXX();
     }
 
     private void OnSettingButtonClick()
@@ -62,7 +63,7 @@ public class UI
 
     private void OnBagButtonClick()
     {
-        _bagWin.RefreshContent();
+        BagMgr.ins.RefreshItem();
         _bagWin.Show();
     }
 

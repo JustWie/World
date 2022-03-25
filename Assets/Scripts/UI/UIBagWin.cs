@@ -20,13 +20,13 @@ public class UIBagWin : WindowBase
         _content = viewport.Find("Content");
 
         var button = _ui.transform.Find("Button").GetComponent<Button>();
-        button.onClick.AddListener(OnButtonClick);
+
+        WorldEvent.ins.RefreshItemAction += RefreshContent;
     }
 
-    public void RefreshContent()
+    public void RefreshContent(Dictionary<string, List<string>> items)
     {
-        var data = Singleton<BagData>.ins.GetBagData();
-        foreach (string type in data.Keys)
+        foreach (string type in items.Keys)
         {
             UIBagItem item = null;
             if (!_items.ContainsKey(type))
@@ -37,19 +37,13 @@ public class UIBagWin : WindowBase
             else
                 item = _items[type];
 
-            if (data[type].Count <= 0)
+            if (items[type].Count <= 0)
             {
                 item.Destroy();
                 _items.Remove(type);
             }
             else
-                item.count.text = data[type].Count.ToString();
+                item.count.text = items[type].Count.ToString();
         }
-    }
-
-    private void OnButtonClick()
-    {
-        Singleton<BagData>.ins.DeleteItem("ComplementItem", 1);
-        RefreshContent();
     }
 }

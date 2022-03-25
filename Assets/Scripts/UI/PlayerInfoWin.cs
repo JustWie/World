@@ -13,13 +13,13 @@ public class PlayerInfoWin : WindowBase
         base.Init(parent, path);
         _slider = _ui.transform.Find("Slider").GetComponent<Slider>();
 
-        int maxHp = Singleton<PlayerData>.ins.GetMaxHp();
-        _slider.maxValue = maxHp;
-        RefreshInfo(maxHp);
+        //int maxHp = Singleton<PlayerData>.ins.GetMaxHp();
+        //_slider.maxValue = maxHp;
+        //RefreshInfo(maxHp);
 
         Show();
 
-        Singleton<PlayerData>.ins.UnderFireAction += RefreshInfo;
+        //Singleton<PlayerData>.ins.UnderFireAction += RefreshInfo;
     }
 
     private void RefreshInfo(int value)

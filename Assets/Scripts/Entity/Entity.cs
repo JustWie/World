@@ -8,6 +8,11 @@ namespace World
     {
         protected GameObject m_entity;
 
+        public GameObject GetObject()
+        {
+            return m_entity;
+        }
+
         public virtual void Init(string name)
         {
             m_entity = Lib.CreateGameObject(name);

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AAA
   - Canvas
+  - Floor
   layers:
   - Default
   - TransparentFX

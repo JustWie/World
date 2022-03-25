@@ -7,9 +7,26 @@ namespace World
 {
     public class Lib
     {
-        static string fileUrl = Application.streamingAssetsPath + "\\property.json";
+        public static string GetPath(string path)
+        {
+            return Application.streamingAssetsPath + "\\" + path;
+        }
 
-        public static void Load()
+        public static List<string> GetFileNames(string folderUrl)
+        {
+            List<string> ret = new List<string>();
+            DirectoryInfo folder = new DirectoryInfo(folderUrl);
+            foreach (FileInfo fileInfo in folder.GetFiles())
+            {
+                if (fileInfo.Extension == ".json")
+                {
+                    ret.Add(fileInfo.Name);
+                }
+            }
+            return ret;
+        }
+
+        public static string ReadFile(string fileUrl)
         {
             string fileText;
             using (StreamReader sr = File.OpenText(fileUrl))
@@ -17,18 +34,14 @@ namespace World
                 fileText = sr.ReadToEnd();
                 sr.Close();
             }
-            var datas = Propertys.StringToDatas(fileText);
-            Singleton<PlayerData>.ins.Load(datas);
-            Singleton<BossData>.ins.Load(datas);
-            Singleton<BagData>.ins.Load(datas);
+            return fileText;
         }
 
-        public static void Save()
+        public static void WriteFile(string fileUrl, string data)
         {
-            string datas = Propertys.DatasToString();
             using (StreamWriter sw = new StreamWriter(fileUrl))
             {
-                sw.Write(datas);
+                sw.Write(data);
                 sw.Close();
                 sw.Dispose();
             }

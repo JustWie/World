@@ -19,15 +19,15 @@ public class TopMsgWin : WindowBase
         _fill = _slider.transform.Find("Fill Area").Find("Fill").GetComponent<Image>();
         _text = _ui.transform.Find("Text").GetComponent<Text>();
 
-        _image.sprite = Lib.CreateSprite(Singleton<BossData>.ins.GetName());
+        //_image.sprite = Lib.CreateSprite(Singleton<BossData>.ins.GetName());
 
-        int maxHp = Singleton<BossData>.ins.GetMaxHp();
-        _slider.maxValue = maxHp;
-        RefreshMsg(maxHp);
+        //int maxHp = Singleton<BossData>.ins.GetMaxHp();
+        //_slider.maxValue = maxHp;
+        //RefreshMsg(maxHp);
 
         Show();
 
-        Singleton<BossData>.ins.UnderFireAction += RefreshMsg;
+        //Singleton<BossData>.ins.UnderFireAction += RefreshMsg;
     }
 
     private void RefreshMsg(int value)
@@ -35,8 +35,8 @@ public class TopMsgWin : WindowBase
         _slider.value = value;
         _text.text = value.ToString();
 
-        int maxHp = Singleton<BossData>.ins.GetMaxHp();
-        if (maxHp * 2 / 3 < value && value <= maxHp)
+        //int maxHp = Singleton<BossData>.ins.GetMaxHp();
+        /*if (maxHp * 2 / 3 < value && value <= maxHp)
         {
             if (_text.color != Color.green)
             {
@@ -59,6 +59,6 @@ public class TopMsgWin : WindowBase
                 _text.color = Color.red;
                 _fill.color = Color.red;
             }
-        }
+        }*/
     }
 }
