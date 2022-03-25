@@ -14,10 +14,16 @@ namespace World
             RefreshItemAction?.Invoke(items);
         }
 
-        public Action<int> UnderFireAction;
-        public void SendUnderFire(int atk)
+        public Action<int, int> RefreshHpAction;
+        public void SendRefreshHpSignal(int uuid, int hp)
         {
-            UnderFireAction?.Invoke(atk);
+            RefreshHpAction?.Invoke(uuid, hp);
+        }
+
+        public Action<int> EntityDeadAction;
+        public void SendEntityDeadSignal(int uuid)
+        {
+            EntityDeadAction?.Invoke(uuid);
         }
     }
 }

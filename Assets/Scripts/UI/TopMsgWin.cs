@@ -19,24 +19,28 @@ public class TopMsgWin : WindowBase
         _fill = _slider.transform.Find("Fill Area").Find("Fill").GetComponent<Image>();
         _text = _ui.transform.Find("Text").GetComponent<Text>();
 
-        //_image.sprite = Lib.CreateSprite(Singleton<BossData>.ins.GetName());
+        var name = EntityMgr.ins.GetEntityData(1).GetName();
+        _image.sprite = Lib.CreateSprite(name);
 
-        //int maxHp = Singleton<BossData>.ins.GetMaxHp();
-        //_slider.maxValue = maxHp;
-        //RefreshMsg(maxHp);
+        int maxHp = EntityMgr.ins.GetEntityData(1).GetMaxHp();
+        _slider.maxValue = maxHp;
+        RefreshMsg(1, maxHp);
 
         Show();
 
-        //Singleton<BossData>.ins.UnderFireAction += RefreshMsg;
+        WorldEvent.ins.RefreshHpAction += RefreshMsg;
     }
 
-    private void RefreshMsg(int value)
+    private void RefreshMsg(int uuid, int value)
     {
+        if (EntityMgr.ins.IsPlayer(uuid))
+            return;
+
         _slider.value = value;
         _text.text = value.ToString();
 
-        //int maxHp = Singleton<BossData>.ins.GetMaxHp();
-        /*if (maxHp * 2 / 3 < value && value <= maxHp)
+        int maxHp = EntityMgr.ins.GetEntityData(1).GetMaxHp();
+        if (maxHp * 2 / 3 < value && value <= maxHp)
         {
             if (_text.color != Color.green)
             {
@@ -59,6 +63,6 @@ public class TopMsgWin : WindowBase
                 _text.color = Color.red;
                 _fill.color = Color.red;
             }
-        }*/
+        }
     }
 }

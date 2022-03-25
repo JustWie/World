@@ -18,23 +18,36 @@ namespace World
             _left = m_entity.transform.Find("Left");
             _right = m_entity.transform.Find("Right");
 
-            //Singleton<BossData>.ins.UnderFireAction += SubHp;
             _dropItem = new DropItem();
 
-            WorldEvent.ins.UnderFireAction += SubHp;
+            WorldEvent.ins.RefreshHpAction += RefreshBody;
+            WorldEvent.ins.EntityDeadAction += OnDead;
         }
 
-        protected override void SubHp(int hp)
+        private void RefreshBody(int uuid, int hp)
         {
-            /*if (hp <= Singleton<BossData>.ins.GetMaxHp() / 3 && _transform)
+            if (EntityMgr.ins.IsPlayer(uuid))
+                return;
+            if (hp <= EntityMgr.ins.GetEntityData(1).GetMaxHp() / 3 && _transform)
             {
                 _left.gameObject.SetActive(false);
                 _right.gameObject.SetActive(false);
                 _transform = false;
             }
-            if (hp <= 0)
-                Dead();*/
+        }
+
+        private void OnDead(int uuid)
+        {
+            if (EntityMgr.ins.IsPlayer(uuid))
+                return;
             Dead();
+        }
+
+        protected override void SubHp(int hp)
+        {
+            
+            if (hp <= 0)
+                Dead();
         }
 
         protected override void Dead()
@@ -47,7 +60,6 @@ namespace World
                 Object.Destroy(instance, 3);
             }
             BagMgr.ins.AddItems(drops);
-            //Singleton<BossData>.ins.OnDead();
             base.Dead();
         }
     }

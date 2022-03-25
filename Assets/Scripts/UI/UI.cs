@@ -51,9 +51,7 @@ public class UI
 
     private void OnButtonClick()
     {
-        //var atk = Singleton<PlayerData>.ins.GetATK();
-        //Singleton<BossData>.ins.UnderFire(atk);
-        EntityMgr.ins.XXX();
+        CombatMgr.ins.NormalAttack(0, 1);
     }
 
     private void OnSettingButtonClick()

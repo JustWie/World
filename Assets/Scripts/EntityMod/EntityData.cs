@@ -42,5 +42,15 @@ namespace World
         {
             return m_atk;
         }
+
+        public int GetHp()
+        {
+            return m_hp;
+        }
+
+        public void SetHp(int hp)
+        {
+            m_hp = hp;
+        }
     }
 }

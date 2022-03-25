@@ -13,9 +13,9 @@ public class PlayerInfoWin : WindowBase
         base.Init(parent, path);
         _slider = _ui.transform.Find("Slider").GetComponent<Slider>();
 
-        //int maxHp = Singleton<PlayerData>.ins.GetMaxHp();
-        //_slider.maxValue = maxHp;
-        //RefreshInfo(maxHp);
+        int maxHp = EntityMgr.ins.GetPlayerData().GetMaxHp();
+        _slider.maxValue = maxHp;
+        RefreshInfo(maxHp);
 
         Show();
 

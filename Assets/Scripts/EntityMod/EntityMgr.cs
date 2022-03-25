@@ -6,8 +6,10 @@ namespace World
 {
     public class EntityMgr : Singleton<EntityMgr>, ManagerInterface
     {
+        int playerID = 0;
         string m_path;
-        Dictionary<string, EntityData> entityDic = new Dictionary<string, EntityData>();
+        Dictionary<int, EntityData> entityUuidDic = new Dictionary<int, EntityData>();
+        Dictionary<string, EntityData> entityPathDic = new Dictionary<string, EntityData>();
 
         public void LoadData()
         {
@@ -20,25 +22,43 @@ namespace World
                 var data = EntityPropertys.ins.StringToPropers(fileText);
                 EntityData entityData = new EntityData();
                 entityData.Load(data);
-                entityDic.Add(path, entityData);
+                entityUuidDic.Add(entityData.GetUuid(), entityData);
+                entityPathDic.Add(path, entityData);
             }
 
         }
 
         public void SaveData()
         {
-            foreach (string path in entityDic.Keys)
+            foreach (string path in entityPathDic.Keys)
             {
-                var data = entityDic[path];
+                var data = entityPathDic[path];
                 string fileText = EntityPropertys.ins.PropersToString(data);
                 Lib.WriteFile(path, fileText);
             }
         }
 
-        public void XXX()
+        public bool IsPlayer(int uuid)
         {
-            WorldEvent.ins.SendUnderFire(1);
+            return uuid == playerID;
         }
 
+        public EntityData GetPlayerData()
+        {
+            return GetEntityData(playerID);
+        }
+
+        public EntityData GetEntityData(int uuid)
+        {
+            return entityUuidDic[uuid];
+        }
+
+        public void SetEntityHp(int uuid, int hp)
+        {
+            GetEntityData(uuid).SetHp(hp);
+            WorldEvent.ins.SendRefreshHpSignal(uuid, hp);
+            if (hp <= 0)
+                WorldEvent.ins.SendEntityDeadSignal(uuid);
+        }
     }
 }
